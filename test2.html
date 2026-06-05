@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#060a13">
         <title>نظام الشماع المتكامل</title>
         <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -40,7 +39,6 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        /* خلفية بسيطة بدون CDN */
         body::before {
             content: '';
             position: fixed;
@@ -212,10 +210,6 @@
             border: 2px solid rgba(14,165,233,0.2);
             border-radius: 24px; padding: 32px 24px; margin-bottom: 20px; text-align: center;
         }
-        .scan-section.offline-mode {
-            border-color: rgba(139,92,246,0.3);
-            background: linear-gradient(135deg, rgba(139,92,246,0.06) 0%, rgba(139,92,246,0.02) 100%);
-        }
         .scan-main-btn {
             width: 110px; height: 110px; border-radius: 50%; border: none;
             background: linear-gradient(135deg, var(--primary), #0284c7);
@@ -235,21 +229,11 @@
             box-shadow: 0 10px 40px var(--danger-glow);
             animation: none;
         }
-        .scan-main-btn.offline-btn {
-            background: linear-gradient(135deg, var(--off-color), #7c3aed);
-            box-shadow: 0 10px 40px var(--off-glow), 0 0 0 0 var(--off-glow);
-            animation: offScanPulse 2.5s ease infinite;
-        }
-        @keyframes offScanPulse {
-            0%,100% { box-shadow: 0 10px 40px var(--off-glow), 0 0 0 0 rgba(139,92,246,0.3); }
-            50% { box-shadow: 0 10px 40px var(--off-glow), 0 0 0 20px rgba(139,92,246,0); }
-        }
         .scan-title { font-size: 1.3rem; font-weight: 900; margin: 18px 0 6px; color: var(--text); }
         .scan-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; max-width: 340px; margin: 0 auto; }
         .scan-steps { display: flex; justify-content: center; gap: 20px; margin-top: 18px; flex-wrap: wrap; }
         .scan-step { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--text-dim); }
         .scan-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; }
-        .scan-step-num.off { background: var(--off-color); }
         #reader { width: 100%; max-width: 400px; margin: 20px auto 0; border-radius: 18px; overflow: hidden; border: 3px solid var(--primary); }
 
         .punch-confirm-overlay {
@@ -341,7 +325,7 @@
         .net-bar.offline { background: rgba(139,92,246,0.12); border: 1px solid rgba(139,92,246,0.4); color: var(--off-color); }
         .net-bar.syncing { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--accent); }
 
-        .sync-banner { display: flex; align-items: center; gap: 10px; padding: 14px 18px; background: rgba(139,92,246,0.1); border: 1px solid var(--off-color); border-radius: 14px; margin-bottom: 16px; font-weight: 600; color: var(--off-color); font-size: 0.9rem; flex-wrap: wrap; }
+        .sync-banner { display: flex; align-items: center; gap: 10px; padding: 14px 18px; background: rgba(139,92,246,0.1); border: 1px solid var(--off-color); border-radius: 14px; margin-bottom: 16px; font-weight: 600; color: var(--off-color); font-size: 0.9rem; }
         .emp-filter-row { display: flex; gap: 10px; margin-bottom: 14px; align-items: flex-end; }
         .dev-id-mono { font-family: 'Courier New', monospace; font-size: 0.8rem; color: var(--accent); background: rgba(0,0,0,0.3); padding: 3px 8px; border-radius: 6px; }
 
@@ -357,46 +341,174 @@
         }
         .offline-login-info i { margin-left: 4px; }
 
-        /* بطاقة البصمة الأوفلاين */
-        .offline-punch-card {
-            background: rgba(139,92,246,0.06); border: 2px solid rgba(139,92,246,0.25);
-            border-radius: 20px; padding: 28px 24px; margin-bottom: 20px; text-align: center;
+        /* ===== قسم الاتصال الجديد ===== */
+        .call-section {
+            margin-top: 24px;
+            padding: 24px 20px;
+            border-top: 2px solid var(--border);
+            text-align: center;
+            position: relative;
         }
-        .offline-punch-card h4 { color: var(--off-color); margin-bottom: 4px; font-size: 1.1rem; }
-        .offline-punch-card p { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.7; }
-        .offline-punch-time-display {
-            font-family: 'Courier New', monospace; font-size: 3rem; font-weight: 900;
-            color: var(--off-color); margin-bottom: 6px;
+        .call-section::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--success);
+            border-radius: 2px;
         }
-        .offline-punch-date-display {
-            font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px;
+        .call-section-label {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--success);
+            margin-bottom: 6px;
         }
-        .offline-punch-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-        .offline-punch-history {
-            margin-top: 20px; padding: 16px; background: rgba(0,0,0,0.2);
-            border-radius: 14px; border: 1px solid var(--border); text-align: right;
+        .call-section-desc {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+            line-height: 1.7;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .offline-punch-history h5 { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; }
-        .oph-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem;
+        .call-btn-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
         }
-        .oph-item:last-child { border-bottom: none; }
-        .oph-time { font-family: 'Courier New', monospace; color: var(--off-color); font-weight: 700; }
-        .oph-type { font-weight: 700; }
-        .oph-type.in { color: var(--success); }
-        .oph-type.out { color: var(--primary); }
-        .oph-del { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.9rem; padding: 4px 8px; border-radius: 6px; transition: background 0.2s; }
-        .oph-del:hover { background: rgba(244,63,94,0.15); }
-        .oph-synced { color: var(--success); font-size: 0.75rem; }
-
-        .clear-offline-btn {
-            margin-top: 10px; padding: 8px 16px; border-radius: 10px;
-            border: 1px solid var(--danger); background: transparent; color: var(--danger);
-            font-family: 'Cairo'; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+        .call-main-btn {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--success), #059669);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 8px 30px var(--success-glow);
+            transition: all 0.3s;
+            animation: callPulse 2s ease infinite;
+            position: relative;
+        }
+        @keyframes callPulse {
+            0%,100% { box-shadow: 0 8px 30px var(--success-glow), 0 0 0 0 rgba(16,185,129,0.3); }
+            50% { box-shadow: 0 8px 30px var(--success-glow), 0 0 0 16px rgba(16,185,129,0); }
+        }
+        .call-main-btn:hover { transform: scale(1.08); }
+        .call-main-btn:active { transform: scale(0.95); animation: none; }
+        .call-main-btn:disabled {
+            background: #374151;
+            box-shadow: none;
+            animation: none;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .call-code-display {
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--accent);
+            background: rgba(0,0,0,0.4);
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 1.5px dashed rgba(245,158,11,0.3);
+            letter-spacing: 2px;
+            direction: ltr;
+        }
+        .call-hint {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+        .call-manual-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .call-manual-row .form-input {
+            font-family: 'Courier New', monospace;
+            direction: ltr;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .call-waiting-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(16px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 8500;
+            padding: 20px;
+        }
+        .call-waiting-overlay.open { display: flex; }
+        .call-waiting-box {
+            text-align: center;
+            animation: screenIn 0.4s ease;
+        }
+        .call-waiting-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(16,185,129,0.1);
+            border: 3px solid var(--success);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--success);
+            margin: 0 auto 20px;
+            animation: callWaitPulse 1.5s ease infinite;
+        }
+        @keyframes callWaitPulse {
+            0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16,185,129,0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(16,185,129,0); }
+        }
+        .call-waiting-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--success);
+            margin-bottom: 8px;
+        }
+        .call-waiting-sub {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+            line-height: 1.7;
+        }
+        .call-waiting-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin: 12px 0 24px;
+            direction: ltr;
+        }
+        .call-cancel-btn {
+            background: transparent;
+            border: 2px solid var(--danger);
+            color: var(--danger);
+            padding: 12px 40px;
+            border-radius: 14px;
+            font-family: 'Cairo';
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
             transition: all 0.2s;
         }
-        .clear-offline-btn:hover { background: var(--danger); color: #fff; }
+        .call-cancel-btn:hover { background: var(--danger); color: #fff; }
 
         @media (max-width: 640px) {
             .container { padding: 12px 10px; }
@@ -415,9 +527,7 @@
             .scan-section { padding: 24px 16px; }
             .scan-main-btn { width: 90px; height: 90px; font-size: 2.2rem; }
             .scan-steps { gap: 12px; }
-            .offline-punch-time-display { font-size: 2.2rem; }
-            .offline-punch-btns { flex-direction: column; }
-            .offline-punch-btns .btn { width: 100%; }
+            .call-manual-row { flex-direction: column; }
         }
     </style>
 </head>
@@ -427,6 +537,17 @@
 
 <div id="punchConfirmOverlay" class="punch-confirm-overlay" onclick="closePunchConfirm(event)">
     <div class="punch-confirm-box" id="punchConfirmBox"></div>
+</div>
+
+<!-- شاشة انتظار المكالمة -->
+<div id="callWaitingOverlay" class="call-waiting-overlay">
+    <div class="call-waiting-box">
+        <div class="call-waiting-icon"><i class="fa-solid fa-phone-volume"></i></div>
+        <div class="call-waiting-title">جاري الاتصال...</div>
+        <div class="call-waiting-sub">اضغط "اتصال" في لوحة الهاتف<br>ثم ارجع للتطبيق فوراً</div>
+        <div class="call-waiting-code" id="callWaitingCode">*555*------#</div>
+        <button class="call-cancel-btn" onclick="cancelCallWaiting()"><i class="fa-solid fa-xmark"></i> إلغاء</button>
+    </div>
 </div>
 
 <div class="container">
@@ -514,10 +635,8 @@
             <div id="syncBanner" class="sync-banner hidden">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <span id="syncBannerText">لديك بصمة محفوظة (أوفلاين) سيتم إرسالها فور توفر إنترنت</span>
-                <button class="btn btn-sm btn-off" style="margin-right:auto;" onclick="forceSyncNow()"><i class="fa-solid fa-rotate"></i> مزامنة الآن</button>
             </div>
 
-            <!-- قسم المسح (أونلاين) -->
             <div class="scan-section" id="scanSection">
                 <button class="scan-main-btn" id="scanMainBtn" onclick="toggleScanner()">
                     <i class="fa-solid fa-camera"></i>
@@ -530,26 +649,28 @@
                     <div class="scan-step"><span class="scan-step-num">3</span> هيتم تلقائياً</div>
                 </div>
                 <div id="reader" class="hidden"></div>
-            </div>
 
-            <!-- قسم البصمة الأوفلاين -->
-            <div class="offline-punch-card hidden" id="offlinePunchCard">
-                <h4><i class="fa-solid fa-wifi-slash"></i> بصمة يدوية (بدون إنترنت)</h4>
-                <p>انت مش متصل بالنت، فاضغط على الزر المناسب عشان تسجل وقت دخولك أو خروجك. البصمة هتتحفظ على جهازك وهتتزامن آلياً لما النت يعود.</p>
-                <div class="offline-punch-time-display" id="offPunchClock">--:--:--</div>
-                <div class="offline-punch-date-display" id="offPunchDate">--</div>
-                <div class="offline-punch-btns">
-                    <button class="btn btn-success btn-lg" onclick="offlinePunchIn()" id="offPunchInBtn">
-                        <i class="fa-solid fa-right-to-bracket"></i> تسجيل دخول
-                    </button>
-                    <button class="btn btn-primary btn-lg" onclick="offlinePunchOut()" id="offPunchOutBtn">
-                        <i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج
-                    </button>
-                </div>
-                <div class="offline-punch-history hidden" id="offlinePunchHistory">
-                    <h5><i class="fa-solid fa-clock-rotate-left"></i> بصمات اليوم المحفوظة محلياً:</h5>
-                    <div id="ophList"></div>
-                    <button class="clear-offline-btn" onclick="clearTodayOfflinePunches()"><i class="fa-solid fa-trash"></i> مسح بصمات اليوم المحفوظة</button>
+                <!-- ===== قسم الاتصال بالرقم المجاني ===== -->
+                <div class="call-section" id="callSection">
+                    <div class="call-section-label"><i class="fa-solid fa-phone"></i> أو سجّل حضورك بمكالمة مجانية</div>
+                    <div class="call-section-desc">
+                        اضغط الزر الأخضر وهيتحولك لاتصال ببلاش.<br>
+                        بعد ما تضغط "اتصال" ارجع للتطبيق فوراً وهيسجل حضورك أو انصرافك تلقائياً.
+                    </div>
+                    <div class="call-btn-wrap">
+                        <button class="call-main-btn" id="callMainBtn" onclick="startCallPunch()">
+                            <i class="fa-solid fa-phone"></i>
+                        </button>
+                        <div class="call-code-display" id="callCodeDisplay">*555*------#</div>
+                        <div class="call-hint">الكود ده يتغير كل يوم تلقائياً</div>
+                    </div>
+                    <!-- إدخال يدوي للكود -->
+                    <div class="call-manual-row">
+                        <input type="text" id="manualCallCode" class="form-input" placeholder="أو اكتب الكود يدوياً" style="flex:1;">
+                        <button class="btn btn-success btn-sm" onclick="submitManualCallCode()" style="height:50px; white-space:nowrap;">
+                            <i class="fa-solid fa-check"></i> تأكيد
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -559,7 +680,8 @@
             <div class="admin-qr-box">
                 <div style="font-weight:700; margin-bottom:12px; color:var(--accent);"><i class="fa-solid fa-shield-halved"></i> كود QR للبصمة (ثابت وصالح طوال اليوم)</div>
                 <div id="qrcode"></div>
-                <div style="font-size:0.78rem; color:var(--text-dim);">الكود صالح ليوم اليوم - الموظف يصوّره من جهازه</div>
+                <div id="adminCodeLabel" style="font-size:1.6rem; font-weight:900; color:var(--accent); margin-top:10px; direction:ltr; font-family:'Courier New',monospace;"></div>
+                <div style="font-size:0.78rem; color:var(--text-dim); margin-top:4px;">الكود صالح ليوم اليوم - الموظف يصوّره أو يتعمل مكالمة بيه</div>
             </div>
 
             <div class="tabs-nav">
@@ -751,17 +873,21 @@ let mainScanner = null;
 let isScanning = false;
 let isOnline = navigator.onLine;
 let firebaseReady = false;
-let offClockTimer = null;
 
+/* معرّف الجهاز الثابت */
 const DEV_ID = localStorage.getItem('sh_dev') || ('D-' + Math.random().toString(36).substr(2, 8).toUpperCase());
 localStorage.setItem('sh_dev', DEV_ID);
 const TODAY = new Date().toISOString().split('T')[0];
 
-function encodeData(text) {
-    try { return btoa(unescape(encodeURIComponent(text))); } catch(e) { return btoa(text); }
-}
-function decodeData(encoded) {
-    try { return decodeURIComponent(escape(atob(encoded))); } catch(e) { return atob(encoded); }
+/* =====================================================
+    توليد كود USSD اليومي
+    ===================================================== */
+function getTodayCallCode() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = String(now.getFullYear()).slice(-2);
+    return `*555*${day}${month}${year}#`;
 }
 
 /* =====================================================
@@ -769,7 +895,7 @@ function decodeData(encoded) {
     ===================================================== */
 const LS = {
     get(key, def) { try { const v = localStorage.getItem('sh_' + key); return v ? JSON.parse(v) : def; } catch(e) { return def; } },
-    set(key, val) { try { localStorage.setItem('sh_' + key, JSON.stringify(val)); } catch(e) { console.warn('localStorage full', e); } },
+    set(key, val) { try { localStorage.setItem('sh_' + key, JSON.stringify(val)); } catch(e) {} },
     remove(key) { localStorage.removeItem('sh_' + key); }
 };
 
@@ -781,40 +907,18 @@ function getLocalCredentials(username) { return LS.get('creds_' + username, null
 function getLocalUsernames() { return LS.get('known_users', []); }
 function addLocalUsername(username) { const list = getLocalUsernames(); if (!list.includes(username)) { list.push(username); LS.set('known_users', list); } }
 
-function getOfflinePunches() { return LS.get('off_punches', []); }
-function saveOfflinePunch(punch) {
-    const arr = getOfflinePunches();
+/* طابور المزامنة */
+function getSyncQueue() { return LS.get('sync_queue', []); }
+function addToSyncQueue(punch) {
+    const arr = getSyncQueue();
     const exists = arr.some(p => p.username === punch.username && p.date === punch.date && p.time === punch.time && p.type === punch.type);
-    if (!exists) { arr.push(punch); LS.set('off_punches', arr); }
-    updateSyncBanner(); renderOfflinePunchHistory();
-}
-function removeOfflinePunch(index) {
-    const arr = getOfflinePunches();
-    arr.splice(index, 1);
-    LS.set('off_punches', arr);
-    updateSyncBanner(); renderOfflinePunchHistory();
-}
-function clearOfflinePunches() { LS.set('off_punches', []); updateSyncBanner(); renderOfflinePunchHistory(); }
-
-function clearTodayOfflinePunches() {
-    if (!ME) return;
-    if (!confirm('متأكد إنك عايز تمسح بصمات اليوم المحفوظة محلياً؟\n(البصمات اللي اتمزامنت بالفعل مش هتتأثر)')) return;
-    const arr = getOfflinePunches().filter(p => !(p.username === ME.username && p.date === TODAY));
-    LS.set('off_punches', arr);
-    // كمان امسح الحضور المحلي لليوم
-    const localAtt = getLocalAttendance(ME.username);
-    delete localAtt[TODAY];
-    LS.set('att_' + ME.username, localAtt);
-    updateSyncBanner(); renderOfflinePunchHistory(); renderEmpStatusLocal(); renderWeekCalendar();
-    toast('تم مسح بصمات اليوم المحفوظة', 'info');
+    if (!exists) { arr.push(punch); LS.set('sync_queue', arr); }
+    updateSyncBanner();
 }
 
+/* حضور محلي */
 function getLocalAttendance(username) { return LS.get('att_' + username, {}); }
-function saveLocalAttendance(username, date, data) {
-    const att = getLocalAttendance(username);
-    att[date] = data;
-    LS.set('att_' + username, att);
-}
+function saveLocalAttendanceFull(username, att) { LS.set('att_' + username, att); }
 function updateLocalAttendance(username, date, updates) {
     const att = getLocalAttendance(username);
     if (!att[date]) att[date] = {};
@@ -827,176 +931,37 @@ function updateLocalAttendance(username, date, updates) {
     ===================================================== */
 function updateNetUI() {
     isOnline = navigator.onLine;
-
     const loginBar = document.getElementById('loginNetBar');
     if (loginBar) {
-        loginBar.innerHTML = isOnline ? '' : `<div class="net-bar offline"><i class="fa-solid fa-wifi-slash"></i> غير متصل بالإنترنت - وضع أوفلاين</div>`;
+        loginBar.innerHTML = isOnline ? '' : '<div class="net-bar offline"><i class="fa-solid fa-wifi-slash"></i> غير متصل بالإنترنت - وضع أوفلاين</div>';
     }
     const offlineInfo = document.getElementById('loginOfflineInfo');
-    if (offlineInfo) {
-        const hasLocal = getLocalUsernames().length > 0;
-        offlineInfo.classList.toggle('hidden', isOnline || !hasLocal);
-    }
+    if (offlineInfo) offlineInfo.classList.toggle('hidden', isOnline || getLocalUsernames().length === 0);
     const dashBar = document.getElementById('dashNetBar');
     if (dashBar) {
-        if (isOnline) {
-            dashBar.innerHTML = `<div class="net-bar online"><i class="fa-solid fa-wifi"></i> متصل بالإنترنت</div>`;
-        } else {
-            dashBar.innerHTML = `<div class="net-bar offline"><i class="fa-solid fa-wifi-slash"></i> وضع أوفلاين - البصمات هتتحفظ محلياً</div>`;
-        }
+        dashBar.innerHTML = isOnline
+            ? '<div class="net-bar online"><i class="fa-solid fa-wifi"></i> متصل بالإنترنت</div>'
+            : '<div class="net-bar offline"><i class="fa-solid fa-wifi-slash"></i> وضع أوفلاين - البصمات هتتحفظ محلياً</div>';
     }
     const dot = document.getElementById('dashNetDot');
     if (dot) {
         dot.style.background = isOnline ? 'var(--success)' : 'var(--off-color)';
         dot.style.boxShadow = isOnline ? '0 0 8px var(--success-glow)' : '0 0 8px var(--off-glow)';
     }
-
-    // تحويل واجهة الموظف حسب حالة النت
-    updateEmpViewMode();
     updateSyncBanner();
 }
+window.addEventListener('online', () => { updateNetUI(); toast('عادت الشبكة! جاري المزامنة...', 'success'); setTimeout(syncOfflinePunches, 1000); });
+window.addEventListener('offline', () => { updateNetUI(); toast('فقدت الاتصال - وضع أوفلاين', 'warn'); });
 
-/* تحويل بين وضع المسح (أونلاين) والبصمة اليدوية (أوفلاين) */
-function updateEmpViewMode() {
-    if (!ME || ME.role === 'admin') return;
-
-    const scanSection = document.getElementById('scanSection');
-    const offPunchCard = document.getElementById('offlinePunchCard');
-
-    if (isOnline && firebaseReady) {
-        // أونلاين: اعرض قسم المسح، اخفئ البصمة اليدوية
-        scanSection.classList.remove('hidden');
-        offPunchCard.classList.add('hidden');
-        stopOfflineClock();
-    } else {
-        // أوفلاين: اخفئ قسم المسح، اعرض البصمة اليدوية
-        scanSection.classList.add('hidden');
-        stopMainScanner(); // تأكد إن الكاميرا مقفولة
-        offPunchCard.classList.remove('hidden');
-        startOfflineClock();
-        renderOfflinePunchHistory();
-        updateOfflinePunchButtons();
-    }
-}
-
-/* ساعة حية للبطاقة الأوفلاين */
-function startOfflineClock() {
-    stopOfflineClock();
-    function tick() {
-        const now = new Date();
-        const clockEl = document.getElementById('offPunchClock');
-        const dateEl = document.getElementById('offPunchDate');
-        if (clockEl) clockEl.textContent = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
-        if (dateEl) dateEl.textContent = now.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    }
-    tick();
-    offClockTimer = setInterval(tick, 1000);
-}
-function stopOfflineClock() { if (offClockTimer) { clearInterval(offClockTimer); offClockTimer = null; } }
-
-/* تحديث أزرار الدخول/الخروج حسب الحالة */
-function updateOfflinePunchButtons() {
-    if (!ME) return;
-    const att = getMyAttendanceForToday();
-    const inBtn = document.getElementById('offPunchInBtn');
-    const outBtn = document.getElementById('offPunchOutBtn');
-
-    if (att && att.clockIn) {
-        inBtn.disabled = true;
-        inBtn.style.opacity = '0.4';
-        inBtn.style.cursor = 'not-allowed';
-        inBtn.innerHTML = `<i class="fa-solid fa-check"></i> تم تسجيل الدخول (${att.clockIn})`;
-    } else {
-        inBtn.disabled = false;
-        inBtn.style.opacity = '1';
-        inBtn.style.cursor = 'pointer';
-        inBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> تسجيل دخول`;
-    }
-
-    if (att && att.clockOut) {
-        outBtn.disabled = true;
-        outBtn.style.opacity = '0.4';
-        outBtn.style.cursor = 'not-allowed';
-        outBtn.innerHTML = `<i class="fa-solid fa-check"></i> تم تسجيل الخروج (${att.clockOut})`;
-    } else if (att && att.clockIn) {
-        outBtn.disabled = false;
-        outBtn.style.opacity = '1';
-        outBtn.style.cursor = 'pointer';
-        outBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج`;
-    } else {
-        outBtn.disabled = true;
-        outBtn.style.opacity = '0.4';
-        outBtn.style.cursor = 'not-allowed';
-        outBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> تسجيل خروج`;
-    }
-}
-
-/* عرض تاريخ البصمات الأوفلاين لليوم */
-function renderOfflinePunchHistory() {
-    const container = document.getElementById('offlinePunchHistory');
-    const list = document.getElementById('ophList');
-    if (!container || !list || !ME) return;
-
-    const punches = getOfflinePunches().filter(p => p.username === ME.username && p.date === TODAY);
-
-    if (punches.length === 0) {
-        container.classList.add('hidden');
-        return;
-    }
-
-    container.classList.remove('hidden');
-    list.innerHTML = '';
-
-    punches.forEach((p, i) => {
-        const globalIdx = getOfflinePunches().findIndex(pp => pp.username === p.username && pp.date === p.date && pp.time === p.time && pp.type === p.type);
-        const typeLabel = p.type === 'in' ? 'دخول' : 'خروج';
-        const typeClass = p.type === 'in' ? 'in' : 'out';
-        list.innerHTML += `
-            <div class="oph-item">
-                <span class="oph-type ${typeClass}"><i class="fa-solid fa-${p.type === 'in' ? 'right-to-bracket' : 'right-from-bracket'}"></i> ${typeLabel}</span>
-                <span class="oph-time">${p.time}</span>
-                <button class="oph-del" onclick="deleteOfflinePunch(${globalIdx})" title="حذف"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-        `;
-    });
-}
-
-function deleteOfflinePunch(globalIdx) {
-    if (!confirm('حذف البصمة دي؟')) return;
-    removeOfflinePunch(globalIdx);
-    // كمان حدّث الحضور المحلي
-    rebuildLocalAttFromPunches();
-    renderEmpStatusLocal(); renderWeekCalendar(); updateOfflinePunchButtons();
-    toast('تم حذف البصمة', 'info');
-}
-
-/* إعادة بناء الحضور المحلي من البصمات المتبقية */
-function rebuildLocalAttFromPunches() {
-    if (!ME) return;
-    const punches = getOfflinePunches().filter(p => p.username === ME.username && p.date === TODAY);
-    const localAtt = getLocalAttendance(ME.username);
-
-    if (punches.length === 0) {
-        // لو مفيش بصمات أوفلاين تانية، شوف فيربيز
-        if (allUsers[ME.username] && allUsers[ME.username].attendance && allUsers[ME.username].attendance[TODAY]) {
-            localAtt[TODAY] = { ...allUsers[ME.username].attendance[TODAY] };
-        } else {
-            delete localAtt[TODAY];
-        }
-    } else {
-        const inP = punches.find(p => p.type === 'in');
-        const outP = punches.find(p => p.type === 'out');
-        // لو في بيانات أونلاين أساسية، نبدأ منها
-        const fbData = (allUsers[ME.username] && allUsers[ME.username].attendance && allUsers[ME.username].attendance[TODAY]) || {};
-        localAtt[TODAY] = {
-            ...fbData,
-            clockIn: inP ? inP.time : (fbData.clockIn || null),
-            clockOut: outP ? outP.time : (fbData.clockOut || null),
-            status: inP ? 'Present' : (fbData.status || 'Absent'),
-            _offline: true
-        };
-    }
-    LS.set('att_' + ME.username, localAtt);
+function updateSyncBanner() {
+    const banner = document.getElementById('syncBanner');
+    if (!banner) return;
+    const arr = getSyncQueue();
+    const text = document.getElementById('syncBannerText');
+    if (arr.length > 0) {
+        banner.classList.remove('hidden');
+        text.textContent = `لديك (${arr.length}) بصمة محفوظة محلياً ${isOnline ? '- جاري المزامنة...' : '- هتتزامن لما النت يعود'}`;
+    } else { banner.classList.add('hidden'); }
 }
 
 /* =====================================================
@@ -1063,22 +1028,20 @@ function renderWeekCalendar() {
             let att = null;
             if (allUsers[ME.username] && allUsers[ME.username].attendance && allUsers[ME.username].attendance[d.str]) {
                 att = allUsers[ME.username].attendance[d.str];
-            }
-            if (!att || (!isOnline && !firebaseReady)) {
+            } else {
                 const localAtt = getLocalAttendance(ME.username);
-                att = localAtt[d.str] || att;
+                att = localAtt[d.str] || null;
             }
             if (att) {
                 if (att.status === 'Present') {
-                    const isOfflineRec = att._offline;
-                    st = isOfflineRec ? `<div class="w-day-status offline"><i class="fa-solid fa-wifi-slash"></i></div>` : `<div class="w-day-status present"><i class="fa-solid fa-check"></i></div>`;
+                    st = att._offline ? '<div class="w-day-status offline"><i class="fa-solid fa-wifi-slash"></i></div>' : '<div class="w-day-status present"><i class="fa-solid fa-check"></i></div>';
                 } else {
-                    st = `<div class="w-day-status absent"><i class="fa-solid fa-xmark"></i></div>`;
+                    st = '<div class="w-day-status absent"><i class="fa-solid fa-xmark"></i></div>';
                 }
             } else if (isPast) {
-                st = `<div class="w-day-status absent">--</div>`;
+                st = '<div class="w-day-status absent">--</div>';
             } else {
-                st = `<div class="w-day-status pending">--</div>`;
+                st = '<div class="w-day-status pending">--</div>';
             }
         }
         daysHTML += `<div class="w-day ${d.isToday?'is-today':''} ${isPast?'is-past':''}"><div class="w-day-name">${d.name}</div><div class="w-day-num">${d.num}</div>${st}</div>`;
@@ -1104,40 +1067,55 @@ function generateEmpQR(containerId, username, realName) {
     const c = document.getElementById(containerId); c.innerHTML = '';
     try { new QRCode(c, { text: data, width: 180, height: 180, colorDark: "#0f172a", colorLight: "#ffffff" }); } catch(e) {}
 }
-function generateQR() {
-    const rawData = `SHAMAA|${TODAY}`;
-    const secureData = encodeData(rawData);
+
+function generateAdminQR() {
+    const code = getTodayCallCode();
     const container = document.getElementById('qrcode');
-    if (container) { container.innerHTML = ''; new QRCode(container, { text: secureData, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M }); }
+    if (container) {
+        container.innerHTML = '';
+        new QRCode(container, { text: code, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M });
+    }
+    const label = document.getElementById('adminCodeLabel');
+    if (label) label.textContent = code;
+}
+
+/* تحديث كود الاتصال في واجهة الموظف */
+function updateCallCodeDisplay() {
+    const code = getTodayCallCode();
+    const el = document.getElementById('callCodeDisplay');
+    if (el) el.textContent = code;
 }
 
 /* =====================================================
-    تسجيل الدخول (يدعم الأوفلاين)
+    تسجيل الدخول
     ===================================================== */
 function doLogin() {
     const u = document.getElementById('loginUser').value.trim().toLowerCase();
     const p = document.getElementById('loginPass').value.trim();
     if (!u || !p) { toast('أدخل اسم المستخدم وكلمة المرور', 'warn'); return; }
 
+    const localCreds = LS.get('creds_' + u, null);
+
     if (isOnline && firebaseReady) {
-        loginOnline(u, p);
+        if (!allUsers[u]) { toast('اسم المستخدم غير موجود', 'error'); return; }
+        if (allUsers[u].password !== p) { toast('كلمة المرور غير صحيحة', 'error'); return; }
+        ME = { username: u, ...allUsers[u] };
+        ME.role = ADMINS.includes(u) ? 'admin' : 'employee';
+        saveLocalCredentials(u, allUsers[u]);
+        addLocalUsername(u);
+        handlePostLogin();
+    } else if (localCreds) {
+        if (localCreds.password === p) {
+            ME = { username: u, realName: localCreds.realName, password: localCreds.password, role: localCreds.role, approvedDevice: localCreds.approvedDevice, _offlineMode: true };
+            toast('دخلت في وضع الأوفلاين', 'info');
+            handlePostLogin();
+        } else { toast('كلمة المرور غلط (أوفلاين)', 'error'); }
     } else {
-        loginOffline(u, p);
+        toast('لازم تفتح نت أول مرة بس عشان تسجل دخول', 'error');
     }
 }
 
-function loginOnline(u, p) {
-    if (!allUsers[u]) { toast('اسم المستخدم غير موجود', 'error'); return; }
-    if (allUsers[u].password !== p) { toast('كلمة المرور غير صحيحة', 'error'); return; }
-
-    ME = { username: u, ...allUsers[u] };
-    ME.role = ADMINS.includes(u) ? 'admin' : 'employee';
-
-    saveLocalCredentials(u, allUsers[u]);
-    addLocalUsername(u);
-
-    if (ME.role !== 'admin') syncLocalAttToFirebase(u);
-
+function handlePostLogin() {
     if (ME.role === 'admin') { enterDashboard(); return; }
     const approved = ME.approvedDevice, pending = ME.pendingDevice;
     if (approved && approved === DEV_ID) { enterDashboard(); }
@@ -1145,46 +1123,10 @@ function loginOnline(u, p) {
     else { showBindScreen(!!pending); }
 }
 
-function loginOffline(u, p) {
-    const localCreds = getLocalCredentials(u);
-    if (!localCreds) { toast('مستخدم غير موجود - لازم تدخل أول مرة بالنت', 'error'); return; }
-    if (localCreds.password !== p) { toast('كلمة المرور غير صحيحة', 'error'); return; }
-
-    ME = {
-        username: u,
-        realName: localCreds.realName,
-        password: localCreds.password,
-        role: localCreds.role,
-        approvedDevice: localCreds.approvedDevice,
-        _offlineMode: true
-    };
-
-    if (ME.role === 'admin') {
-        toast('المدير لازم يكون متصل بالنت', 'error');
-        ME = null;
-        return;
-    }
-
-    if (ME.approvedDevice && ME.approvedDevice !== DEV_ID) {
-        document.getElementById('rejDevId').textContent = DEV_ID;
-        showScreen('screenRejected');
-        return;
-    }
-
-    if (!ME.approvedDevice) {
-        toast('الجهاز مش مربوط - لازم تربطه أول مرة بالنت', 'warn');
-        showBindScreen(false);
-        return;
-    }
-
-    toast('دخول أوفلاين - البصمات هتتحفظ محلياً', 'info');
-    enterDashboard();
-}
-
 function doLogout() {
     ME = null;
     if (bindCheckTimer) { clearInterval(bindCheckTimer); bindCheckTimer = null; }
-    stopEmpScanner(); stopMainScanner(); stopOfflineClock();
+    stopEmpScanner(); stopMainScanner();
     document.getElementById('loginUser').value = '';
     document.getElementById('loginPass').value = '';
     showScreen('screenLogin');
@@ -1195,10 +1137,7 @@ function doLogout() {
     شاشة ربط الجهاز
     ===================================================== */
 function showBindScreen(hasPending) {
-    if (!isOnline) {
-        toast('لازم تكون متصل بالنت عشان تربط الجهاز', 'warn');
-        return;
-    }
+    if (!isOnline) { toast('لازم تكون متصل بالنت عشان تربط الجهاز', 'warn'); return; }
     const realName = ME.realName || ME.username;
     document.getElementById('bindDevId').textContent = DEV_ID;
     document.getElementById('bindQrName').textContent = realName;
@@ -1206,7 +1145,7 @@ function showBindScreen(hasPending) {
     const statusArea = document.getElementById('bindStatusArea'), bindBtn = document.getElementById('bindBtn');
     if (hasPending) {
         bindBtn.classList.add('hidden');
-        statusArea.innerHTML = `<div class="bind-status-card waiting"><span class="bind-spinner"></span> تم إرسال طلب الربط - انتظر المدير يعتمد الجهاز</div>`;
+        statusArea.innerHTML = '<div class="bind-status-card waiting"><span class="bind-spinner"></span> تم إرسال طلب الربط - انتظر المدير يعتمد الجهاز</div>';
         startBindChecker();
     } else { bindBtn.classList.remove('hidden'); statusArea.innerHTML = ''; }
     showScreen('screenBind');
@@ -1215,10 +1154,10 @@ function requestBind() {
     if (!ME) return;
     document.getElementById('bindBtn').classList.add('hidden');
     const statusArea = document.getElementById('bindStatusArea');
-    statusArea.innerHTML = `<div class="bind-status-card waiting"><span class="bind-spinner"></span> جاري الإرسال...</div>`;
+    statusArea.innerHTML = '<div class="bind-status-card waiting"><span class="bind-spinner"></span> جاري الإرسال...</div>';
     db.ref(`users/${ME.username}/pendingDevice`).set(DEV_ID).then(() => {
         toast('تم إرسال طلب الربط','success');
-        statusArea.innerHTML = `<div class="bind-status-card waiting"><span class="bind-spinner"></span> انتظر اعتماد المدير</div>`;
+        statusArea.innerHTML = '<div class="bind-status-card waiting"><span class="bind-spinner"></span> انتظر اعتماد المدير</div>';
         startBindChecker();
     }).catch(() => { toast('خطأ','error'); statusArea.innerHTML=''; document.getElementById('bindBtn').classList.remove('hidden'); });
 }
@@ -1229,7 +1168,7 @@ function startBindChecker() {
         db.ref(`users/${ME.username}/approvedDevice`).once('value', snap => {
             if (snap.val() === DEV_ID) {
                 clearInterval(bindCheckTimer); bindCheckTimer = null;
-                document.getElementById('bindStatusArea').innerHTML = `<div class="bind-status-card approved"><i class="fa-solid fa-circle-check" style="font-size:1.5rem;margin-bottom:8px;display:block;"></i> تم اعتماد جهازك!</div>`;
+                document.getElementById('bindStatusArea').innerHTML = '<div class="bind-status-card approved"><i class="fa-solid fa-circle-check" style="font-size:1.5rem;margin-bottom:8px;display:block;"></i> تم اعتماد جهازك!</div>';
                 toast('تم اعتماد الجهاز!','success');
                 saveLocalCredentials(ME.username, { ...ME, approvedDevice: DEV_ID });
                 setTimeout(() => { ME.approvedDevice = DEV_ID; ME._offlineMode = false; enterDashboard(); }, 1200);
@@ -1258,7 +1197,8 @@ function enterDashboard() {
     document.getElementById('empView').classList.toggle('hidden', isAdmin);
     document.getElementById('btnMyQr').classList.toggle('hidden', isAdmin);
     document.getElementById('attDate').value = TODAY;
-    if (isAdmin) { generateQR(); fillUserSelects(); fillReportEmpFilter(); fillManualBindSelect(); initReportDates('thisWeek'); }
+    if (isAdmin) { generateAdminQR(); fillUserSelects(); fillReportEmpFilter(); fillManualBindSelect(); initReportDates('thisWeek'); }
+    updateCallCodeDisplay();
     renderWeekCalendar(); renderAttTable(); renderShiftsTable();
     updateNetUI(); updateSyncBanner();
     if (!isAdmin && !ME._offlineMode) listenToMyStatus();
@@ -1268,209 +1208,281 @@ function enterDashboard() {
 /* =====================================================
     حالة الموظف
     ===================================================== */
-function getMyAttendanceForToday() {
-    if (allUsers[ME.username] && allUsers[ME.username].attendance && allUsers[ME.username].attendance[TODAY]) {
-        return allUsers[ME.username].attendance[TODAY];
-    }
-    const localAtt = getLocalAttendance(ME.username);
-    return localAtt[TODAY] || null;
-}
-
 function listenToMyStatus() {
     if (!ME || ME.role === 'admin') return;
     db.ref(`users/${ME.username}/attendance/${TODAY}`).on('value', snap => {
-        const d = snap.val();
-        renderEmpStatusBar(d);
+        renderEmpStatusBar(snap.val());
         renderWeekCalendar();
     });
 }
-
 function renderEmpStatusLocal() {
-    const d = getMyAttendanceForToday();
-    renderEmpStatusBar(d);
+    const today = getTodayStr();
+    const localAtt = getLocalAttendance(ME.username);
+    renderEmpStatusBar(localAtt[today] || null);
 }
-
 function renderEmpStatusBar(d) {
     const bar = document.getElementById('statusBar');
     if (!bar) return;
-    if (d) {
-        const hi = !!d.clockIn, ho = !!d.clockOut;
-        const offBadge = d._offline ? ' <span class="badge badge-off" style="font-size:0.65rem;vertical-align:middle;">أوفلاين</span>' : '';
+    const today = getTodayStr();
+    const localAtt = getLocalAttendance(ME.username);
+    const data = d || localAtt[today];
+    if (data) {
+        const hi = !!data.clockIn, ho = !!data.clockOut;
+        const offBadge = data._offline ? ' <span class="badge badge-off" style="font-size:0.65rem;">غير مرفوع</span>' : '';
         bar.innerHTML = `
-            <div class="status-chip"><div class="chip-label">الحالة</div><div class="chip-value ${d.status==='Present'?'clocked-in':'not-yet'}">${d.status==='Present'?'حاضر':d.status}${offBadge}</div></div>
-            <div class="status-chip"><div class="chip-label">وقت الدخول</div><div class="chip-value ${hi?'clocked-in':'not-yet'}">${hi?d.clockIn:'--:--'}</div></div>
-            <div class="status-chip"><div class="chip-label">وقت الانصراف</div><div class="chip-value ${ho?'clocked-out':'not-yet'}">${ho?d.clockOut:'--:--'}</div></div>`;
+            <div class="status-chip"><div class="chip-label">الحالة</div><div class="chip-value">${data.status==='Present'?'حاضر':data.status}${offBadge}</div></div>
+            <div class="status-chip"><div class="chip-label">وقت الدخول</div><div class="chip-value" style="color:${hi?'var(--success)':'var(--text-dim)'}">${hi?data.clockIn:'--:--'}</div></div>
+            <div class="status-chip"><div class="chip-label">وقت الانصراف</div><div class="chip-value" style="color:${ho?'var(--primary)':'var(--text-dim)'}">${ho?data.clockOut:'--:--'}</div></div>`;
     } else {
-        bar.innerHTML = `<div class="status-chip" style="flex:1;"><div class="chip-label">حالة اليوم</div><div class="chip-value not-yet">لم يتم تسجيل بصمة بعد</div></div>`;
+        bar.innerHTML = '<div class="status-chip" style="flex:1;"><div class="chip-label">حالة اليوم</div><div class="chip-value not-yet">لم يتم البصمة بعد</div></div>';
     }
 }
 
 /* =====================================================
-    الماسح الضوئي الرئيسي (أونلاين فقط)
+    الماسح الضوئي الرئيسي (QR)
     ===================================================== */
-function toggleScanner() {
-    if (isScanning) { stopMainScanner(); } else { startScan(); }
-}
+function toggleScanner() { if (isScanning) stopMainScanner(); else startScan(); }
 
 function startScan() {
     const readerEl = document.getElementById('reader');
     const btn = document.getElementById('scanMainBtn');
-    const title = document.getElementById('scanTitle');
-    const desc = document.getElementById('scanDesc');
-    const steps = document.getElementById('scanSteps');
-
     readerEl.classList.remove('hidden');
     btn.classList.add('scanning');
     btn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
-    title.textContent = 'الكاميرا مفتوحة... صوّر QR المدير';
-    title.style.color = 'var(--danger)';
-    desc.textContent = 'قرّب الكاميرا من شاشة المدير اللي عليها كود QR';
-    steps.classList.add('hidden');
+    document.getElementById('scanTitle').textContent = 'الكاميرا مفتوحة... صوّر QR المدير';
+    document.getElementById('scanTitle').style.color = 'var(--danger)';
+    document.getElementById('scanDesc').textContent = 'قرّب الكاميرا من شاشة المدير اللي عليها كود QR';
+    document.getElementById('scanSteps').classList.add('hidden');
     isScanning = true;
-
     mainScanner = new Html5Qrcode("reader");
     mainScanner.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: { width: 250, height: 250 } },
-        (text) => { stopMainScanner(); processScannedQR(text); },
-        () => {}
-    ).catch(() => {
-        stopMainScanner();
-        toast('تعذر فتح الكاميرا - تأكد إن الموقع عنده صلاحية الكاميرا', 'error');
-    });
+        { facingMode: "environment" }, { fps: 10, qrbox: { width: 250, height: 250 } },
+        (text) => { stopMainScanner(); processScannedQR(text); }, () => {}
+    ).catch(() => { stopMainScanner(); toast('تعذر فتح الكاميرا', 'error'); });
 }
 
 function stopMainScanner() {
     if (mainScanner) {
-        mainScanner.stop().then(() => {
-            document.getElementById('reader').classList.add('hidden');
-            mainScanner = null;
-        }).catch(() => {
-            document.getElementById('reader').classList.add('hidden');
-            mainScanner = null;
-        });
+        mainScanner.stop().then(() => { document.getElementById('reader').classList.add('hidden'); mainScanner = null; }).catch(() => { document.getElementById('reader').classList.add('hidden'); mainScanner = null; });
     }
     const btn = document.getElementById('scanMainBtn');
-    const title = document.getElementById('scanTitle');
-    const desc = document.getElementById('scanDesc');
-    const steps = document.getElementById('scanSteps');
     btn.classList.remove('scanning');
     btn.innerHTML = '<i class="fa-solid fa-camera"></i>';
-    title.textContent = 'صوّر QR المدير';
-    title.style.color = 'var(--text)';
-    desc.textContent = 'اضغط الزر ده وصرّب الكاميرا نحو الـ QR اللي على شاشة المدير عشان تسجل بصمتك';
-    steps.classList.remove('hidden');
+    document.getElementById('scanTitle').textContent = 'صوّر QR المدير';
+    document.getElementById('scanTitle').style.color = 'var(--text)';
+    document.getElementById('scanDesc').textContent = 'اضغط الزر ده وصرّب الكاميرا نحو الـ QR اللي على شاشة المدير عشان تسجل بصمتك';
+    document.getElementById('scanSteps').classList.remove('hidden');
     isScanning = false;
 }
 
-/* معالجة الـ QR */
-function processScannedQR(scannedData) {
-    try {
-        const decrypted = decodeData(scannedData);
-        const parts = decrypted.split('|');
-
-        if (parts[0] !== "SHAMAA" || parts[1] !== TODAY) {
-            toast('الكود ده مش كود بصمة صالح لليوم ده', 'error');
-            return;
-        }
-
-        if (!ME) { toast('مستخدم غير مسجل الدخول!', 'error'); return; }
-
-        const now = new Date();
-        const timeNow = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-        const currentAtt = getMyAttendanceForToday();
-
-        if (!currentAtt || !currentAtt.clockIn) {
-            const punchData = { clockIn: timeNow, status: 'Present', deviceId: DEV_ID, date: TODAY };
-            if (isOnline) {
-                db.ref(`users/${ME.username}/attendance/${TODAY}`).update(punchData).then(() => {
-                    showPunchConfirm('success', 'تسجيل حضور', timeNow, `تم تسجيل حضور ${ME.realName || ME.username} بنجاح`);
-                }).catch(() => { savePunchOffline('in', timeNow, punchData); });
-            } else { savePunchOffline('in', timeNow, punchData); }
-        } else if (!currentAtt.clockOut) {
-            const punchData = { clockOut: timeNow };
-            if (isOnline) {
-                db.ref(`users/${ME.username}/attendance/${TODAY}`).update(punchData).then(() => {
-                    showPunchConfirm('success', 'تسجيل انصراف', timeNow, `تم تسجيل انصراف ${ME.realName || ME.username} بنجاح`);
-                }).catch(() => { savePunchOffline('out', timeNow, punchData); });
-            } else { savePunchOffline('out', timeNow, punchData); }
-        } else {
-            toast(`سجلت الحضور (${currentAtt.clockIn}) والانصراف (${currentAtt.clockOut}) بالفعل اليوم`, 'warn');
-        }
-    } catch (e) {
-        toast('الكود ده مش QR بصمة صالح', 'error');
+/* معالجة الـ QR الممسوح */
+function processScannedQR(text) {
+    const code = getTodayCallCode();
+    if (text.trim() === code.trim()) {
+        executePunch();
+    } else {
+        toast('الكود مش صحيح - تأكد إنك بصوّر كود اليوم', 'error');
     }
 }
 
 /* =====================================================
-    البصمة الأوفلاين (يدوية)
+    نظام الاتصال (USSD Call)
     ===================================================== */
-function offlinePunchIn() {
+let callWaitingActive = false;
+
+function startCallPunch() {
     if (!ME) return;
-    const att = getMyAttendanceForToday();
-    if (att && att.clockIn) {
-        toast('سجلت دخول بالفعل اليوم', 'warn');
-        return;
-    }
 
-    const now = new Date();
-    const timeNow = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-    const punchData = { clockIn: timeNow, status: 'Present', deviceId: DEV_ID, date: TODAY, _offline: true };
+    const code = getTodayCallCode();
+    callWaitingActive = true;
 
-    // احفظ محلياً للعرض الفوري
-    saveLocalAttendance(ME.username, TODAY, punchData);
+    /* 1. حفظ الوقت قبل المكالمة */
+    const preCallTime = new Date();
 
-    // احفظ في قائمة المزامنة
-    saveOfflinePunch({ username: ME.username, date: TODAY, time: timeNow, type: 'in', deviceId: DEV_ID, timestamp: Date.now() });
+    /* 2. إظهار شاشة الانتظار */
+    document.getElementById('callWaitingCode').textContent = code;
+    document.getElementById('callWaitingOverlay').classList.add('open');
 
-    showPunchConfirm('offline', 'تسجيل دخول (أوفلاين)', timeNow, `تم الحفظ محلياً وهيتزامن لما النت يعود`);
-    renderEmpStatusLocal(); renderWeekCalendar(); updateOfflinePunchButtons();
+    /* 3. فتح لوحة الاتصال */
+    window.location.href = 'tel:' + code.replace('#', '%23');
+
+    toast('اضغط "اتصال" ثم ارجع للتطبيق فوراً', 'info');
+
+    /* 4. ضع тайمر أمان - لو المستخدم رجع بعد 90 ثانية بدون ما يغلق الشاشة */
+    setTimeout(() => {
+        if (callWaitingActive) {
+            completeCallPunch(preCallTime);
+        }
+    }, 90000);
 }
 
-function offlinePunchOut() {
-    if (!ME) return;
-    const att = getMyAttendanceForToday();
-    if (!att || !att.clockIn) {
-        toast('لازم تسجل دخول الأول', 'warn');
-        return;
-    }
-    if (att.clockOut) {
-        toast('سجلت خروج بالفعل اليوم', 'warn');
-        return;
-    }
+/* هذه الدالة بتتنفذ لما المستخدم يرجع للتطبيق */
+function completeCallPunch(preCallTime) {
+    if (!callWaitingActive) return;
+    callWaitingActive = false;
 
+    /* إغلاق شاشة الانتظار */
+    document.getElementById('callWaitingOverlay').classList.remove('open');
+
+    /* الوقت الحالي هو وقت البصمة */
     const now = new Date();
     const timeNow = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    const today = getTodayStr();
 
-    updateLocalAttendance(ME.username, TODAY, { clockOut: timeNow, _offline: true });
+    /* شيك: لو المكالمة استغرقت أقل من 3 ثواني = مش محتمل إنه اتصل فعلاً */
+    const elapsed = now.getTime() - preCallTime.getTime();
+    if (elapsed < 3000) {
+        toast('ماتم تسجيل البصمة - لازم تضغط اتصال الأول', 'warn');
+        return;
+    }
 
-    saveOfflinePunch({ username: ME.username, date: TODAY, time: timeNow, type: 'out', deviceId: DEV_ID, timestamp: Date.now() });
+    /* تنفيذ البصمة */
+    let localAtt = getLocalAttendance(ME.username);
+    let current = localAtt[today] || {};
 
-    showPunchConfirm('offline', 'تسجيل خروج (أوفلاين)', timeNow, `تم الحفظ محلياً وهيتزامن لما النت يعود`);
-    renderEmpStatusLocal(); renderWeekCalendar(); updateOfflinePunchButtons();
+    if (!current.clockIn) {
+        /* تسجيل دخول */
+        savePunchData('in', timeNow);
+        showPunchConfirm('success', 'تم تسجيل الحضور', timeNow, 'بالتوفيق في يومك');
+    } else if (!current.clockOut) {
+        /* تسجيل خروج */
+        savePunchData('out', timeNow);
+        showPunchConfirm('success', 'تم تسجيل الانصراف', timeNow, 'تصبح على خير');
+    } else {
+        toast('أنت مسجل الدخول والخروج لهذا اليوم بالفعل', 'warn');
+    }
+
+    renderEmpStatusLocal();
+    renderWeekCalendar();
 }
+
+function cancelCallWaiting() {
+    callWaitingActive = false;
+    document.getElementById('callWaitingOverlay').classList.remove('open');
+    toast('تم إلغاء الاتصال', 'info');
+}
+
+/* مراقبة عودة المستخدم من الاتصال */
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden && callWaitingActive && ME) {
+        /* المستخدم رجع للتطبيق - ننتظر لحظة ثم نكمل */
+        setTimeout(() => {
+            if (callWaitingActive) {
+                completeCallPunch(new Date(Date.now() - 5000));
+            }
+        }, 500);
+    }
+});
+
+/* لو المتصفح فقد Focus ورجع (للمتصفحات اللي مش بت fire visibilitychange كويس) */
+window.addEventListener('focus', function() {
+    if (callWaitingActive && ME) {
+        setTimeout(() => {
+            if (callWaitingActive) {
+                completeCallPunch(new Date(Date.now() - 5000));
+            }
+        }, 800);
+    }
+});
+
+/* إدخال يدوي للكود */
+function submitManualCallCode() {
+    const input = document.getElementById('manualCallCode');
+    const code = input.value.trim();
+    if (!code) { toast('اكتب الكود الأول', 'warn'); return; }
+
+    const expectedCode = getTodayCallCode();
+    if (code === expectedCode) {
+        input.value = '';
+        executePunch();
+    } else {
+        toast('الكود مش صحيح', 'error');
+    }
+}
+
+/* الضغط على Enter في خانة الكود اليدوي */
+document.addEventListener('DOMContentLoaded', function() {
+    const manualInput = document.getElementById('manualCallCode');
+    if (manualInput) {
+        manualInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') submitManualCallCode();
+        });
+    }
+});
 
 /* =====================================================
-    نافذة تأكيد البصمة
+    حفظ البصمة (مشترك بين QR والاتصال)
     ===================================================== */
+function executePunch() {
+    const now = new Date();
+    const timeNow = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+    const today = getTodayStr();
+
+    let localAtt = getLocalAttendance(ME.username);
+    let current = localAtt[today] || {};
+
+    if (!current.clockIn) {
+        savePunchData('in', timeNow);
+        showPunchConfirm('success', 'تم تسجيل الحضور', timeNow, 'بالتوفيق في يومك');
+    } else if (!current.clockOut) {
+        savePunchData('out', timeNow);
+        showPunchConfirm('success', 'تم تسجيل الانصراف', timeNow, 'تصبح على خير');
+    } else {
+        toast('أنت مسجل الدخول والخروج لهذا اليوم بالفعل', 'warn');
+    }
+
+    renderEmpStatusLocal();
+    renderWeekCalendar();
+}
+
+function savePunchData(type, time) {
+    const today = getTodayStr();
+
+    /* 1. تحديث البيانات المحلية فوراً */
+    let localAtt = getLocalAttendance(ME.username);
+    if (!localAtt[today]) localAtt[today] = { status: 'Present', date: today };
+
+    if (type === 'in') {
+        localAtt[today].clockIn = time;
+        localAtt[today].status = 'Present';
+    } else {
+        localAtt[today].clockOut = time;
+    }
+    localAtt[today]._offline = true;
+    saveLocalAttendanceFull(ME.username, localAtt);
+
+    /* 2. إضافة لطابور المزامنة */
+    addToSyncQueue({
+        username: ME.username,
+        date: today,
+        time: time,
+        type: type,
+        deviceId: DEV_ID,
+        timestamp: Date.now()
+    });
+
+    /* 3. محاولة رفع فوري لو في نت */
+    if (isOnline && firebaseReady) syncOfflinePunches();
+}
+
+/* نافذة تأكيد البصمة */
 function showPunchConfirm(type, title, time, sub) {
     const overlay = document.getElementById('punchConfirmOverlay');
     const box = document.getElementById('punchConfirmBox');
-    const config = {
+    const configs = {
         success: { iconClass: 'success', iconName: 'circle-check', color: 'var(--success)' },
         error: { iconClass: 'error', iconName: 'circle-xmark', color: 'var(--danger)' },
         offline: { iconClass: 'offline', iconName: 'wifi-slash', color: 'var(--off-color)' }
     };
-    const c = config[type] || config.success;
+    const c = configs[type] || configs.success;
     box.innerHTML = `
         <div class="punch-confirm-icon ${c.iconClass}"><i class="fa-solid fa-${c.iconName}"></i></div>
         <div class="punch-confirm-title" style="color:${c.color}">${title}</div>
         <div class="punch-confirm-time" style="color:${c.color}">${time}</div>
         <div class="punch-confirm-sub">${sub}</div>
-        <button class="btn btn-primary btn-full" onclick="closePunchConfirm()">تم</button>
-    `;
+        <button class="btn btn-primary btn-full" onclick="closePunchConfirm()">تم</button>`;
     overlay.classList.add('open');
-    setTimeout(() => { overlay.classList.remove('open'); }, 4500);
+    setTimeout(() => overlay.classList.remove('open'), 4500);
 }
 function closePunchConfirm(e) {
     if (e && e.target !== e.currentTarget && !e.target.closest('.btn')) return;
@@ -1480,88 +1492,33 @@ function closePunchConfirm(e) {
 /* =====================================================
     مزامنة البصمات الأوفلاين
     ===================================================== */
-let syncInProgress = false;
+async function syncOfflinePunches() {
+    if (!navigator.onLine || !firebaseReady) return;
+    let queue = getSyncQueue();
+    if (queue.length === 0) return;
 
-function forceSyncNow() {
-    if (!isOnline || !firebaseReady) {
-        toast('مش متصل بالنت دلوقتي', 'warn');
-        return;
-    }
-    syncOfflinePunches();
-}
-
-function syncOfflinePunches() {
-    if (!isOnline || !firebaseReady || syncInProgress) return;
-    const punches = getOfflinePunches();
-    if (punches.length === 0) return;
-
-    syncInProgress = true;
     const dashBar = document.getElementById('dashNetBar');
-    if (dashBar) dashBar.innerHTML = `<div class="net-bar syncing"><span class="bind-spinner"></span> جاري مزامنة (${punches.length}) بصمة...</div>`;
+    if (dashBar) dashBar.innerHTML = `<div class="net-bar syncing"><span class="bind-spinner"></span> جاري رفع (${queue.length}) بصمة...</div>`;
 
-    let synced = 0, failed = 0, totalToProcess = punches.length;
-
-    function processNext(index) {
-        if (index >= punches.length) {
-            syncInProgress = false;
-            updateNetUI();
-            if (synced > 0) toast(`تمت مزامنة (${synced}) بصمة بنجاح`, 'success');
-            if (failed > 0) toast(`(${failed}) بصمة فشلت مزامنتها`, 'error');
-            // امسح علامة أوفلاين من البيانات المحلية
-            if (ME) {
-                const localAtt = getLocalAttendance(ME.username);
-                let changed = false;
-                Object.keys(localAtt).forEach(date => {
-                    if (localAtt[date]._offline) { delete localAtt[date]._offline; changed = true; }
-                });
-                if (changed) LS.set('att_' + ME.username, localAtt);
-                renderWeekCalendar(); renderEmpStatusLocal();
-            }
-            return;
-        }
-
-        const punch = punches[index];
-        const ref = db.ref(`users/${punch.username}/attendance/${punch.date}`);
-
-        ref.once('value').then(snap => {
-            const current = snap.val() || {};
-            let updates = {};
-
-            if (punch.type === 'in' && !current.clockIn) {
-                updates = { clockIn: punch.time, status: 'Present', deviceId: punch.deviceId, date: punch.date };
-            } else if (punch.type === 'out' && !current.clockOut && punch.time !== current.clockIn) {
-                updates = { clockOut: punch.time };
-            }
-
-            if (Object.keys(updates).length > 0) {
-                ref.update(updates).then(() => {
-                    // احذف البصمة من القائمة المحلية
-                    const arr = getOfflinePunches();
-                    const realIdx = arr.findIndex(p => p.username === punch.username && p.date === punch.date && p.time === punch.time && p.type === punch.type);
-                    if (realIdx !== -1) { arr.splice(realIdx, 1); LS.set('off_punches', arr); }
-                    synced++;
-                    updateSyncBanner(); renderOfflinePunchHistory();
-                    processNext(index + 1);
-                }).catch(() => { failed++; processNext(index + 1); });
-            } else {
-                // مفيش حاجة تتحدث، احذفها من القائمة
-                const arr = getOfflinePunches();
-                const realIdx = arr.findIndex(p => p.username === punch.username && p.date === punch.date && p.time === punch.time && p.type === punch.type);
-                if (realIdx !== -1) { arr.splice(realIdx, 1); LS.set('off_punches', arr); }
-                updateSyncBanner(); renderOfflinePunchHistory();
-                processNext(index + 1);
-            }
-        }).catch(() => { failed++; processNext(index + 1); });
+    let newQueue = [...queue];
+    for (let i = 0; i < queue.length; i++) {
+        const punch = queue[i];
+        try {
+            const ref = db.ref(`users/${punch.username}/attendance/${punch.date}`);
+            let updateData = punch.type === 'in'
+                ? { clockIn: punch.time, status: 'Present', deviceId: punch.deviceId, date: punch.date }
+                : { clockOut: punch.time };
+            await ref.update(updateData);
+            newQueue = newQueue.filter(p => p.timestamp !== punch.timestamp);
+            /* مسح علامة أوفلاين من السجل المحلي */
+            let localAtt = getLocalAttendance(punch.username);
+            if (localAtt[punch.date]) delete localAtt[punch.date]._offline;
+            saveLocalAttendanceFull(punch.username, localAtt);
+        } catch (e) { console.error("فشلت مزامنة بصمة"); }
     }
-
-    processNext(0);
-}
-
-function syncLocalAttToFirebase(username) {
-    const offlinePunches = getOfflinePunches().filter(p => p.username === username);
-    if (offlinePunches.length > 0) {
-        setTimeout(syncOfflinePunches, 2000);
-    }
+    LS.set('sync_queue', newQueue);
+    updateNetUI(); updateSyncBanner(); renderWeekCalendar();
+    if (ME && ME.role !== 'admin') renderEmpStatusLocal();
 }
 
 /* =====================================================
@@ -1584,12 +1541,12 @@ function handleEmpScan(text) {
     if (parts.length < 4 || parts[0] !== EMP_QR_PREFIX) { toast('الكود ده مش QR موظف صحيح','error'); return; }
     const scannedUsername = parts[1], scannedDevId = parts[2], scannedName = parts[3];
     if (!allUsers[scannedUsername]) {
-        document.getElementById('scanEmpResult').innerHTML = `<div class="scan-emp-result" style="background:rgba(244,63,94,0.08);border-color:var(--danger);"><div class="ser-name" style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> مستخدم غير موجود</div></div>`;
+        document.getElementById('scanEmpResult').innerHTML = '<div class="scan-emp-result" style="background:rgba(244,63,94,0.08);border-color:var(--danger);"><div class="ser-name" style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> مستخدم غير موجود</div></div>';
         return;
     }
     const isAlreadyBound = (allUsers[scannedUsername].approvedDevice || '') === scannedDevId;
     let html = `<div class="scan-emp-result"><div class="ser-name"><i class="fa-solid fa-user-check"></i> ${scannedName}</div><div class="ser-dev"><i class="fa-solid fa-mobile-screen-button" style="margin-left:4px;"></i> ${scannedDevId}</div>`;
-    if (isAlreadyBound) { html += `<div style="color:var(--success);font-weight:700;"><i class="fa-solid fa-circle-check"></i> مربط بالفعل</div>`; }
+    if (isAlreadyBound) { html += '<div style="color:var(--success);font-weight:700;"><i class="fa-solid fa-circle-check"></i> مربط بالفعل</div>'; }
     else { html += `<div style="display:flex;gap:8px;justify-content:center;margin-top:12px;"><button class="btn btn-success btn-sm" onclick="requestBindFromAdmin('${scannedUsername}','${scannedDevId}','${scannedName}')"><i class="fa-solid fa-link"></i> إرسال طلب ربط</button></div>`; }
     html += '</div>';
     document.getElementById('scanEmpResult').innerHTML = html;
@@ -1613,7 +1570,7 @@ function manualBindDevice() {
     db.ref(`users/${u}/pendingDevice`).set(devId).then(() => {
         document.getElementById('manualBindDevId').value = '';
         fillManualBindSelect(); renderDevicesTable();
-        toast(`تم إضافة كطلب معلق.. اضغط "اعتماد"`,'warn');
+        toast('تم إضافة كطلب معلق.. اضغط "اعتماد"','warn');
     }).catch(() => toast('خطأ','error'));
 }
 function renderDevicesTable() {
@@ -1696,6 +1653,11 @@ function xlAbsences(){const rows=[];Object.keys(allUsers).forEach(u=>{if(ADMINS.
 function xlArchive(){toast('تم أرشفة البيانات','success');}
 
 /* =====================================================
+    مساعدات
+    ===================================================== */
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+
+/* =====================================================
     الاستماع للبيانات
     ===================================================== */
 function initListeners() {
@@ -1705,8 +1667,6 @@ function initListeners() {
         if (ME && allUsers[ME.username]) { ME = { username: ME.username, ...allUsers[ME.username] }; ME.role = ADMINS.includes(ME.username) ? 'admin' : 'employee'; }
         renderAttTable(); renderShiftsTable(); renderWeekCalendar();
         if(ME && ME.role === 'admin') renderDevicesTable();
-        // تحديث واجهة الموظف لو النت رجع
-        if (ME && ME.role !== 'admin') updateEmpViewMode();
     });
     db.ref('schedules').on('value', snap => { allSched = snap.val() || {}; renderShiftsTable(); });
 }
@@ -1716,81 +1676,16 @@ function initListeners() {
     ===================================================== */
 initListeners();
 updateNetUI();
+if(navigator.onLine) setTimeout(syncOfflinePunches, 3000);
 
-// محاولة إعادة الاتصال لو فيربيز لم يعمل
-let fbRetryCount = 0;
-const fbRetryTimer = setInterval(() => {
-    if (firebaseReady || fbRetryCount > 10) { clearInterval(fbRetryTimer); return; }
-    if (isOnline) {
-        db.ref('users').once('value').then(snap => {
-            if (snap.val()) {
-                allUsers = snap.val();
-                firebaseReady = true;
-                clearInterval(fbRetryTimer);
-                updateNetUI();
-                // لو المستخدم داخل بالفعل، حدّث الواجهة
-                if (ME && ME.role !== 'admin') updateEmpViewMode();
-            }
-        }).catch(() => {});
-    }
-    fbRetryCount++;
-}, 3000);
-
-// مزامنة دورية
-setInterval(() => {
-    if (isOnline && firebaseReady && ME && ME.role !== 'admin') syncOfflinePunches();
-}, 15000);
-
-// أحداث الكيبورد
+/* أحداث الكيبورد */
 document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 document.getElementById('loginUser').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginPass').focus(); });
 
-// إغلاق المودالات
+/* إغلاق المودالات */
 document.getElementById('corrModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeCorrModal(); });
 document.getElementById('shiftDetailModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeShiftDetail(); });
 document.getElementById('empQrModalOverlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeEmpQrModal(); });
-
-/* =====================================================
-    Service Worker للتخزين المؤقت (PWA أساسي)
-    ===================================================== */
-if ('serviceWorker' in navigator) {
-    // نعمل Service Worker inline عشان يخزّن الملفات
-    const swCode = `
-        const CACHE = 'shamaa-v3';
-        const ASSETS = [
-            'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap',
-            'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
-        ];
-        self.addEventListener('install', e => {
-            e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(() => {})).then(() => self.skipWaiting()));
-        });
-        self.addEventListener('activate', e => {
-            e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
-        });
-        self.addEventListener('fetch', e => {
-            if (e.request.method !== 'GET') return;
-            // خزّن الخطوط والأيقونات
-            if (e.request.url.includes('fonts.googleapis') || e.request.url.includes('font-awesome') || e.request.url.includes('fonts.gstatic')) {
-                e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).then(res => {
-                    if (res.ok) { const cl = res.clone(); caches.open(CACHE).then(c => c.put(e.request, cl)); }
-                    return res;
-                }).catch(() => caches.match(e.request))));
-            }
-            // فيربيز: دايماً network first
-            if (e.request.url.includes('firebaseio.com')) {
-                e.respondWith(fetch(e.request).catch(() => new Response('{}', { headers: { 'Content-Type': 'application/json' } })));
-                return;
-            }
-        });
-    `;
-    const swBlob = new Blob([swCode], { type: 'application/javascript' });
-    const swUrl = URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).then(() => {
-        console.log('Service Worker registered for offline support');
-    }).catch(err => {
-        console.warn('SW registration failed:', err);
-    });
-}
 </script>
 </body>
 </html>
